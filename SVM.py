@@ -1,0 +1,33 @@
+import sklearn
+from sklearn import datasets
+from sklearn import svm
+from sklearn import metrics
+from sklearn.neighbors import KNeighborsClassifier
+
+#Loading dataset
+cancer = datasets.load_breast_cancer()
+
+#print(cancer.feature_names)
+#print(cancer.target_names)
+
+x = cancer.data
+y = cancer.target
+
+#Training data
+x_train, x_test, y_train, y_test = sklearn.model_selection.train_test_split(x, y, test_size=0.2)
+
+#print(x_train, y_train)
+
+#looks for malignant/benign tumor
+classes = ["malignant", "benign"]
+
+#Using SVM
+clf = svm.SVC(kernel="linear", C=2)
+#clf = KNeighborsClassifier(n_neighbors=5)
+clf.fit(x_train, y_train)
+
+y_predict = clf.predict(x_test)
+#Accuracy of SVM ML on this data
+acc = metrics.accuracy_score(y_test, y_predict)
+print(acc)
+
